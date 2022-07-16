@@ -54,5 +54,6 @@
     <color name="default_color2">#2C2C2C</color>
     <color name="bar_color">#7C5ADC</color>
 
-
+    <color name="light_background">#FFFFFFFF</color>
+    <color name="night_background">#23273A</color>
 </resources>
