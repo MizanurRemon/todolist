@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#1f1f2e</color>
+    <color name="colorPrimaryDark">#1f1f2e</color>
+    <color name="colorAccent">#1f1f2e</color>
+    <color name="stockGreen">#7CB342</color>
+    <color name="stockRed">#F1403C</color>
+    <color name="prgressColor">#E68F22</color>
+    <color name="hin">#9f9f9f</color>
+    <color name="red3">#EE3530</color>
+    <color name="overlay_light_10">#1AFFFFFF</color>
+    <color name="overlay_light_20">#33FFFFFF</color>
+    <color name="overlay_light_30">#4DFFFFFF</color>
+    <color name="overlay_light_40">#66FFFFFF</color>
+    <color name="overlay_light_50">#8FFFFFF0</color>
+    <color name="overlay_light_60">#99FFFFFF</color>
+    <color name="overlay_light_70">#B3FFFFFF</color>
+    <color name="overlay_light_80">#CCFFFFFF</color>
+    <color name="overlay_light_90">#E6FFFFFF</color>
+    <color name="overlay_dark_10">#1A000000</color>
+    <color name="overlay_dark_20">#33000000</color>
+    <color name="overlay_dark_30">#4D000000</color>
+    <color name="overlay_dark_40">#66000000</color>
+    <color name="overlay_dark_50">#80000000</color>
+    <color name="overlay_dark_60">#99000000</color>
+    <color name="overlay_dark_70">#B3000000</color>
+    <color name="overlay_dark_80">#CC000000</color>
+    <color name="overlay_dark_90">#E6000000</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_700">#C9B5F6</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pink">#FF0059</color>
+    <color name="background_grey">#FFE9E9</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#DCFFFD1E</color>
+    <color name="blue">#2196F3</color>
+    <color name="grey">#8E8E8E</color>
+    <color name="transparent_color">#00ffffff</color>
+    <color name="light_grey">#E4E3E3</color>
+    <color name="navy_blue">#3E4461</color>
+    <color name="dark_green">#256127</color>
+    <color name="green">#169C1B</color>
+    <color name="orange">#FF6F00</color>
+
+    <color name="default_color">#27323b</color>
+
+    <color name="item_color">#2C2C2C</color>
+    <color name="countDown_color">#679267</color>
+    <color name="default_color2">#2C2C2C</color>
+    <color name="bar_color">#7C5ADC</color>
+
+
 </resources>
