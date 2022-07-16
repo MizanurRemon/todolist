@@ -16,10 +16,19 @@
         android:padding="@dimen/_10sdp">
 
         <TextView
+            android:id="@+id/positionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:text="1."
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textSize="@dimen/_10sdp"
             android:textStyle="bold" />
 
 
@@ -29,8 +38,11 @@
             android:gravity="right">
 
             <ImageView
+                android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:src="@drawable/ic_baseline_delete_24"
                 app:tint="@color/red" />
         </LinearLayout>

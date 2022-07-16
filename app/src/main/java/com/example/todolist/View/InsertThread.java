@@ -30,7 +30,6 @@ public class InsertThread extends Thread {
         taskDao.insertTask(new Task(taskName, duration));
 
         //FancyToast.makeText(getApplicationContext(), "inserted", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-
     }
 
 }

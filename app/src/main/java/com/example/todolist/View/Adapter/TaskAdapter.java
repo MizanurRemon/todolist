@@ -3,6 +3,7 @@ package com.example.todolist.View.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         Task response = tasks.get(position);
         holder.titleText.setText(response.taskName);
+        holder.positionText.setText(String.valueOf(position + 1) + ".");
     }
 
     @Override
@@ -40,13 +42,56 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
+    private OnItemClickListener onClickListener;
+    private OnItemDeleteListener onItemDeleteListener;
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
+    }
+
+    public interface OnItemDeleteListener {
+        void OnItemDelete(int position);
+    }
+
+    public void setOnClickListener(OnItemClickListener onClickListener, OnItemDeleteListener onItemDeleteListener) {
+        this.onClickListener = onClickListener;
+        this.onItemDeleteListener = onItemDeleteListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleText;
+        TextView titleText, positionText;
+        ImageView deleteButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titleText = itemView.findViewById(R.id.titleText);
+            positionText = itemView.findViewById(R.id.positionText);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onClickListener.OnItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemDeleteListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onItemDeleteListener.OnItemDelete(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

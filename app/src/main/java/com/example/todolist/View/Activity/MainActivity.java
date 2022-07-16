@@ -29,15 +29,17 @@ import com.example.todolist.View.RoomDB.TaskDao;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TaskAdapter.OnItemClickListener, TaskAdapter.OnItemDeleteListener {
 
     LinearLayout main_background;
     ExtendedFloatingActionButton addButton;
 
     TaskAdapter taskAdapter;
     RecyclerView itemView;
+    List<Task> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +60,16 @@ public class MainActivity extends AppCompatActivity {
         get_tasks();
     }
 
-    private void get_tasks() {
+    public void get_tasks() {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "task_database").allowMainThreadQueries().build();
         TaskDao taskDao = db.taskDao();
-        List<Task> tasks = taskDao.get_all_tasks();
+
+        tasks = new ArrayList<>();
+        tasks = taskDao.get_all_tasks();
 
         taskAdapter = new TaskAdapter(tasks);
+        taskAdapter.setOnClickListener(this::OnItemClick, this::OnItemDelete);
         itemView.setAdapter(taskAdapter);
 
     }
@@ -106,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
         InsertThread insertThread = new InsertThread(taskName, duration, MainActivity.this);
         insertThread.start();
+
+        get_tasks();
     }
 
     private void init_view() {
@@ -149,26 +156,30 @@ public class MainActivity extends AppCompatActivity {
         main_background.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
     }
 
-    //class InsertThread extends Thread {
-    //
-    //        final String taskName, duration;
-    //
-    //        public InsertThread(String taskName, String duration) {
-    //            // store parameter for later user
-    //            this.taskName = taskName;
-    //            this.duration = duration;
-    //        }
-    //
-    //        public void run() {
-    //            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-    //                    AppDatabase.class, "task_database").build();
-    //
-    //            TaskDao taskDao = db.taskDao();
-    //            taskDao.insertTask(new Task(taskName, duration));
-    //
-    //            //FancyToast.makeText(getApplicationContext(), "inserted", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-    //
-    //        }
-    //
-    //    }
+    @Override
+    public void OnItemClick(int position) {
+
+        Task response = tasks.get(position);
+
+        Toast.makeText(this, response.taskName, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void OnItemDelete(int position) {
+        Task response = tasks.get(position);
+
+        String taskID = String.valueOf(response.task_id);
+
+       // Toast.makeText(this, taskID, Toast.LENGTH_SHORT).show();
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "task_database").allowMainThreadQueries().build();
+        TaskDao taskDao = db.taskDao();
+        taskDao.delete_tasks(response.task_id);
+        tasks.remove(position);
+        taskAdapter.notifyDataSetChanged();
+        itemView.setAdapter(taskAdapter);
+    }
+
+
 }

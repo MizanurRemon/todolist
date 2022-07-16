@@ -14,4 +14,7 @@ public interface TaskDao {
 
     @Insert
     void insertTask(Task tasks);
+
+    @Query("DELETE FROM task WHERE task_id= :id")
+    void delete_tasks(int id);
 }
