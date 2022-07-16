@@ -2,6 +2,8 @@ package com.example.todolist.View.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.app.Dialog;
@@ -19,16 +21,23 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.todolist.R;
+import com.example.todolist.View.Adapter.TaskAdapter;
+import com.example.todolist.View.InsertThread;
 import com.example.todolist.View.RoomDB.AppDatabase;
 import com.example.todolist.View.RoomDB.Task;
 import com.example.todolist.View.RoomDB.TaskDao;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout main_background;
     ExtendedFloatingActionButton addButton;
+
+    TaskAdapter taskAdapter;
+    RecyclerView itemView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,20 @@ public class MainActivity extends AppCompatActivity {
                 add_item_alert();
             }
         });
+
+
+        get_tasks();
+    }
+
+    private void get_tasks() {
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "task_database").allowMainThreadQueries().build();
+        TaskDao taskDao = db.taskDao();
+        List<Task> tasks = taskDao.get_all_tasks();
+
+        taskAdapter = new TaskAdapter(tasks);
+        itemView.setAdapter(taskAdapter);
+
     }
 
     private void add_item_alert() {
@@ -81,13 +104,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void insert_task(String taskName, String duration) {
 
-        InsertThread insertThread = new InsertThread(taskName, duration);
+        InsertThread insertThread = new InsertThread(taskName, duration, MainActivity.this);
         insertThread.start();
     }
 
     private void init_view() {
         main_background = findViewById(R.id.main_background);
         addButton = findViewById(R.id.addButton);
+
+        itemView = findViewById(R.id.itemViewID);
+        itemView.setHasFixedSize(true);
+        itemView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     @Override
@@ -122,26 +149,26 @@ public class MainActivity extends AppCompatActivity {
         main_background.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
     }
 
-    class InsertThread extends Thread {
-
-        final String taskName, duration;
-
-        public InsertThread(String taskName, String duration) {
-            // store parameter for later user
-            this.taskName = taskName;
-            this.duration = duration;
-        }
-
-        public void run() {
-            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                    AppDatabase.class, "task_database").build();
-
-            TaskDao taskDao = db.taskDao();
-            taskDao.insertTask(new Task(taskName, duration));
-
-            //FancyToast.makeText(getApplicationContext(), "inserted", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
-
-        }
-
-    }
+    //class InsertThread extends Thread {
+    //
+    //        final String taskName, duration;
+    //
+    //        public InsertThread(String taskName, String duration) {
+    //            // store parameter for later user
+    //            this.taskName = taskName;
+    //            this.duration = duration;
+    //        }
+    //
+    //        public void run() {
+    //            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+    //                    AppDatabase.class, "task_database").build();
+    //
+    //            TaskDao taskDao = db.taskDao();
+    //            taskDao.insertTask(new Task(taskName, duration));
+    //
+    //            //FancyToast.makeText(getApplicationContext(), "inserted", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+    //
+    //        }
+    //
+    //    }
 }
