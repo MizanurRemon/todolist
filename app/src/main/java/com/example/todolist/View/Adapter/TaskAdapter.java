@@ -5,20 +5,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
+import com.example.todolist.View.Activity.MainActivity;
 import com.example.todolist.View.RoomDB.Task;
 
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     List<Task> tasks;
+    MainActivity mainActivity;
 
-    public TaskAdapter(List<Task> tasks) {
+    public TaskAdapter(List<Task> tasks, MainActivity mainActivity) {
         this.tasks = tasks;
+        this.mainActivity = mainActivity;
     }
 
     @NonNull
@@ -90,6 +94,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                             onItemDeleteListener.OnItemDelete(position);
                         }
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mainActivity.edit_function(getAdapterPosition());
+                    return false;
                 }
             });
         }

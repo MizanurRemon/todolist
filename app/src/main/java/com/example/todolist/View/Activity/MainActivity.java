@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.todolist.R;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
         tasks = new ArrayList<>();
         tasks = taskDao.get_all_tasks();
 
-        taskAdapter = new TaskAdapter(tasks);
+        taskAdapter = new TaskAdapter(tasks, MainActivity.this);
         taskAdapter.setOnClickListener(this::OnItemClick, this::OnItemDelete);
         itemView.setAdapter(taskAdapter);
 
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
 
         EditText taskNameText = addDialog.findViewById(R.id.taskNameText);
         EditText durationText = addDialog.findViewById(R.id.durationText);
+        TextView titleText = addDialog.findViewById(R.id.titleText);
+
+        titleText.setText("Add item");
 
         AppCompatButton saveButton = addDialog.findViewById(R.id.saveButton);
 
@@ -156,6 +160,54 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
         main_background.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
     }
 
+    public void edit_function(int position) {
+        Task response = tasks.get(position);
+        //Toast.makeText(this, "edit " + String.valueOf(response.task_id), Toast.LENGTH_SHORT).show();
+
+        Dialog editDialog = new Dialog(this);
+        editDialog.setContentView(R.layout.add_item_alert);
+        editDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        editDialog.show();
+
+        Window window = editDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+        wlp.width = android.view.WindowManager.LayoutParams.MATCH_PARENT;
+        wlp.height = android.view.WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(wlp);
+
+        EditText taskNameText = editDialog.findViewById(R.id.taskNameText);
+        EditText durationText = editDialog.findViewById(R.id.durationText);
+        TextView titleText = editDialog.findViewById(R.id.titleText);
+
+        titleText.setText("Edit item");
+        taskNameText.setText(response.taskName);
+        durationText.setText(response.taskDuration);
+
+        AppCompatButton saveButton = editDialog.findViewById(R.id.saveButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String taskName = taskNameText.getText().toString().trim();
+                String duration = durationText.getText().toString().trim();
+
+                if (TextUtils.isEmpty(taskName) || TextUtils.isEmpty(duration)) {
+                    FancyToast.makeText(getApplicationContext(), "Empty field", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show();
+                } else {
+                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                            AppDatabase.class, "task_database").allowMainThreadQueries().build();
+                    TaskDao taskDao = db.taskDao();
+                    taskDao.update_task(response.task_id, taskName, duration);
+
+                    get_tasks();
+
+                    editDialog.dismiss();
+                }
+            }
+        });
+    }
+
     @Override
     public void OnItemClick(int position) {
 
@@ -170,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
 
         String taskID = String.valueOf(response.task_id);
 
-       // Toast.makeText(this, taskID, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, taskID, Toast.LENGTH_SHORT).show();
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "task_database").allowMainThreadQueries().build();
