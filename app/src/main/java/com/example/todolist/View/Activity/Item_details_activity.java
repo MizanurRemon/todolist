@@ -6,6 +6,7 @@ import androidx.room.Room;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class Item_details_activity extends AppCompatActivity {
     LinearLayout main_background;
     TextView titleText, durationText;
     String taskID;
+    TextView startText, endText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,10 @@ public class Item_details_activity extends AppCompatActivity {
 
         //Toast.makeText(this, response.taskName, Toast.LENGTH_SHORT).show();
         titleText.setText(response.taskName);
-        durationText.setText("Duration: "+response.taskDuration+" days");
+        durationText.setText(response.taskDuration + " days");
+
+        startText.setText(response.startDate);
+        endText.setText(response.endDate);
     }
 
     private void init_view() {
@@ -60,6 +65,9 @@ public class Item_details_activity extends AppCompatActivity {
         titleText = findViewById(R.id.titleText);
         durationText = findViewById(R.id.durationText);
         taskID = getIntent().getStringExtra("task_id");
+
+        startText = findViewById(R.id.startText);
+        endText = findViewById(R.id.endText);
     }
 
     @Override
