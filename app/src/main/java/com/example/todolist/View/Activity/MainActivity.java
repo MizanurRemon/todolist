@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
 
         InsertThread insertThread = new InsertThread(taskName, startDate, endDate, duration, MainActivity.this);
         insertThread.start();
-
+        //insertThread.interrupt();
         get_tasks();
     }
 
@@ -279,7 +279,22 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
 
         titleText.setText("Edit item");
         taskNameText.setText(response.taskName);
+        startText.setText(response.startDate);
+        endText.setText(response.endDate);
 
+        startText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pick_date(startText);
+            }
+        });
+
+        endText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pick_date(endText);
+            }
+        });
 
         AppCompatButton saveButton = editDialog.findViewById(R.id.saveButton);
 
@@ -304,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
                         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                                 AppDatabase.class, "task_database").allowMainThreadQueries().build();
                         TaskDao taskDao = db.taskDao();
-                        taskDao.update_task(response.task_id, taskName, String.valueOf(duration));
+                        taskDao.update_task(response.task_id, taskName,startDate, endDate, String.valueOf(duration));
 
                         get_tasks();
 

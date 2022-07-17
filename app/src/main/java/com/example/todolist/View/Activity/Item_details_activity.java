@@ -51,7 +51,7 @@ public class Item_details_activity extends AppCompatActivity {
 
         //Toast.makeText(this, response.taskName, Toast.LENGTH_SHORT).show();
         titleText.setText(response.taskName);
-        durationText.setText("Duration: "+response.taskDuration);
+        durationText.setText("Duration: "+response.taskDuration+" days");
     }
 
     private void init_view() {

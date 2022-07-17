@@ -31,6 +31,7 @@ public class InsertThread extends Thread {
         TaskDao taskDao = db.taskDao();
         taskDao.insertTask(new Task(taskName, startDate, endDate, duration));
 
+        //mainActivity.get_tasks();
         //FancyToast.makeText(getApplicationContext(), "inserted", FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
     }
 
