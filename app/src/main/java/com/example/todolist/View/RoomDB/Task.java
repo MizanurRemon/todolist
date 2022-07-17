@@ -12,11 +12,35 @@ public class Task {
     @ColumnInfo(name = "task_name")
     public String taskName;
 
+    @ColumnInfo(name = "start_date")
+    public String startDate;
+
+    @ColumnInfo(name = "end_date")
+    public String endDate;
+
     @ColumnInfo(name = "task_duration")
     public String taskDuration;
 
-    public Task(String taskName, String taskDuration) {
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Task(String taskName, String startDate, String endDate, String taskDuration) {
         this.taskName = taskName;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.taskDuration = taskDuration;
     }
 

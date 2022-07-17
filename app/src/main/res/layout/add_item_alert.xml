@@ -44,21 +44,109 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_5sdp">
 
-            <EditText
-                android:id="@+id/durationText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:hint="Duration"
-                android:inputType="number"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:textCursorDrawable="@drawable/cursor_color"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/calendar_today_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:text="Starts"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/startText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="Start date"
+                    android:inputType="number"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_5sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/calendar_today_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:text="Ends"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/endText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="End date"
+                    android:inputType="number"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/saveButton"

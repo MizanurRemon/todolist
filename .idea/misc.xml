@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Android/todolist/app/src/main/res/drawable/cursor_color.xml" value="0.12" />
         <entry key="..\:/Android/todolist/app/src/main/res/drawable/shape.xml" value="0.12" />
+        <entry key="..\:/Android/todolist/app/src/main/res/layout/activity_item_details.xml" value="0.1" />
         <entry key="..\:/Android/todolist/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Android/todolist/app/src/main/res/layout/add_item_alert.xml" value="0.18125" />
         <entry key="..\:/Android/todolist/app/src/main/res/layout/task_card.xml" value="0.18229166666666666" />

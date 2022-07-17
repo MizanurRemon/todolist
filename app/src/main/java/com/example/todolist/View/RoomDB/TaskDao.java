@@ -12,6 +12,9 @@ public interface TaskDao {
     @Query("SELECT * FROM task")
     List<Task> get_all_tasks();
 
+    @Query("SELECT * FROM task WHERE task_id = :taskID")
+    Task get_specific_tasks(int taskID);
+
     @Insert
     void insertTask(Task tasks);
 
