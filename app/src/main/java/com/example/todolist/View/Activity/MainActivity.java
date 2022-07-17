@@ -3,6 +3,8 @@ package com.example.todolist.View.Activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -23,6 +25,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +55,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
     RecyclerView itemView;
     List<Task> tasks;
 
+    ImageView gridButton;
+
     String format = "dd-MM-yyyy";
+
+    Boolean viewGridState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,21 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
             public void onClick(View view) {
 
                 add_item_alert();
+            }
+        });
+
+        gridButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (viewGridState) {
+                    viewGridState = false;
+                    gridButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_grid_on_24));
+                    itemView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                } else {
+                    viewGridState = true;
+                    gridButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_list_24));
+                    itemView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                }
             }
         });
 
@@ -220,6 +242,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
         itemView = findViewById(R.id.itemViewID);
         itemView.setHasFixedSize(true);
         itemView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        gridButton = findViewById(R.id.gridButton);
     }
 
     @Override
@@ -319,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
                         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                                 AppDatabase.class, "task_database").allowMainThreadQueries().build();
                         TaskDao taskDao = db.taskDao();
-                        taskDao.update_task(response.task_id, taskName,startDate, endDate, String.valueOf(duration));
+                        taskDao.update_task(response.task_id, taskName, startDate, endDate, String.valueOf(duration));
 
                         get_tasks();
 
